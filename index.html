@@ -123,21 +123,24 @@
     </main>
 
     <!-- Bottom Navigation & Action Bar -->
-    <footer class="w-full max-w-md p-3 z-10 bg-slate-950/90 backdrop-blur-md border-t border-cyan-900/40 flex flex-col gap-2">
-        <div class="flex gap-2">
-            <button onclick="game.startDive()" id="dive-btn" class="glow-button flex-1 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl font-bold text-white text-sm flex items-center justify-center gap-2 shadow-lg">
-                🚢 LAUNCH DIVE MISSION
+    <footer class="w-full max-w-md p-2 z-10 bg-slate-950/90 backdrop-blur-md border-t border-cyan-900/40 flex flex-col gap-2">
+        <div class="flex gap-1.5">
+            <button onclick="game.startDive()" id="dive-btn" class="glow-button flex-1 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 rounded-xl font-bold text-white text-xs flex items-center justify-center gap-1 shadow-lg">
+                🚢 LAUNCH
             </button>
-            <button onclick="game.openStationHub()" class="bg-slate-900 hover:bg-slate-800 text-cyan-300 px-3 rounded-xl text-xs font-semibold border border-cyan-500/30 transition flex items-center gap-1">
+            <button onclick="game.openStationHub()" class="bg-slate-900 hover:bg-slate-800 text-cyan-300 px-2.5 rounded-xl text-[11px] font-semibold border border-cyan-500/30 transition flex items-center gap-1">
                 🏗️ Hub
             </button>
-            <button onclick="game.openWardrobe()" class="bg-slate-900 hover:bg-slate-800 text-pink-300 px-3 rounded-xl text-xs font-semibold border border-pink-500/30 transition flex items-center gap-1">
+            <button onclick="game.openWardrobe()" class="bg-slate-900 hover:bg-slate-800 text-pink-300 px-2.5 rounded-xl text-[11px] font-semibold border border-pink-500/30 transition flex items-center gap-1">
                 🎨 Suits
             </button>
-            <button onclick="game.openWeaponWardrobe()" class="bg-slate-900 hover:bg-slate-800 text-amber-300 px-3 rounded-xl text-xs font-semibold border border-amber-500/30 transition flex items-center gap-1">
-                🔫 Weapons
+            <button onclick="game.openWeaponWardrobe()" class="bg-slate-900 hover:bg-slate-800 text-amber-300 px-2.5 rounded-xl text-[11px] font-semibold border border-amber-500/30 transition flex items-center gap-1">
+                🔫 Arms
             </button>
-            <button onclick="game.openQuests()" class="bg-slate-900 hover:bg-slate-800 text-yellow-300 px-3 rounded-xl text-xs font-semibold border border-yellow-500/30 transition flex items-center gap-1">
+            <button onclick="game.openPetWardrobe()" class="bg-slate-900 hover:bg-slate-800 text-emerald-300 px-2.5 rounded-xl text-[11px] font-semibold border border-emerald-500/30 transition flex items-center gap-1">
+                🤖 Pets
+            </button>
+            <button onclick="game.openQuests()" class="bg-slate-900 hover:bg-slate-800 text-yellow-300 px-2.5 rounded-xl text-[11px] font-semibold border border-yellow-500/30 transition flex items-center gap-1">
                 🏆 Quests
             </button>
         </div>
@@ -265,45 +268,69 @@
                 this.maxHealth = 100;
                 this.stationLevel = 1;
                 
-                // 15 Driver Swimmer Skins
+                // 15 Distinct Driver Swimmer Suits (Unique Body Geometry & Silhouette Styles)
                 this.currentSkin = 'cyan';
                 this.skins = {
-                    cyan:    { name: 'Cyan Core', primary: '#22d3ee', accent: '#f43f5e', trail: '#38bdf8' },
-                    pink:    { name: 'Neon Sakura', primary: '#f472b6', accent: '#a855f7', trail: '#ec4899' },
-                    gold:    { name: 'Cyber Gold', primary: '#fbbf24', accent: '#f97316', trail: '#fde047' },
-                    magma:   { name: 'Magma Diver', primary: '#ef4444', accent: '#f97316', trail: '#dc2626' },
-                    phantom: { name: 'Abyss Phantom', primary: '#10b981', accent: '#06b6d4', trail: '#34d399' },
-                    void:    { name: 'Abyss Void', primary: '#a855f7', accent: '#06b6d4', trail: '#c084fc' },
-                    cobalt:  { name: 'Cobalt Ranger', primary: '#3b82f6', accent: '#1d4ed8', trail: '#60a5fa' },
-                    solar:   { name: 'Solar Flare', primary: '#f59e0b', accent: '#ef4444', trail: '#fbbf24' },
-                    toxic:   { name: 'Toxic Hazard', primary: '#84cc16', accent: '#10b981', trail: '#a3e635' },
-                    plasma:  { name: 'Plasma Storm', primary: '#06b6d4', accent: '#8b5cf6', trail: '#22d3ee' },
-                    crimson: { name: 'Crimson Surge', primary: '#dc2626', accent: '#f43f5e', trail: '#f87171' },
-                    frost:   { name: 'Arctic Frost', primary: '#93c5fd', accent: '#38bdf8', trail: '#bfdbfe' },
-                    matrix:  { name: 'Matrix Hacker', primary: '#22c55e', accent: '#14532d', trail: '#4ade80' },
-                    titanium:{ name: 'Titanium Mech', primary: '#94a3b8', accent: '#475569', trail: '#cbd5e1' },
-                    omega:   { name: 'Omega Prime', primary: '#e11d48', accent: '#fbbf24', trail: '#f43f5e' }
+                    cyan:    { name: 'Standard Exo-Suit', primary: '#22d3ee', accent: '#f43f5e', trail: '#38bdf8', bodyStyle: 'standard' },
+                    pink:    { name: 'Neon Sakura Suit', primary: '#f472b6', accent: '#a855f7', trail: '#ec4899', bodyStyle: 'sleek' },
+                    gold:    { name: 'Cyber Gold Mech', primary: '#fbbf24', accent: '#f97316', trail: '#fde047', bodyStyle: 'heavy' },
+                    magma:   { name: 'Magma Diver', primary: '#ef4444', accent: '#f97316', trail: '#dc2626', bodyStyle: 'armored' },
+                    phantom: { name: 'Abyss Phantom', primary: '#10b981', accent: '#06b6d4', trail: '#34d399', bodyStyle: 'stealth' },
+                    void:    { name: 'Abyss Void Suit', primary: '#a855f7', accent: '#06b6d4', trail: '#c084fc', bodyStyle: 'winged' },
+                    cobalt:  { name: 'Cobalt Ranger', primary: '#3b82f6', accent: '#1d4ed8', trail: '#60a5fa', bodyStyle: 'tactical' },
+                    solar:   { name: 'Solar Flare Suit', primary: '#f59e0b', accent: '#ef4444', trail: '#fbbf24', bodyStyle: 'reactor' },
+                    toxic:   { name: 'Toxic Hazard Suit', primary: '#84cc16', accent: '#10b981', trail: '#a3e635', bodyStyle: 'hazmat' },
+                    plasma:  { name: 'Plasma Storm', primary: '#06b6d4', accent: '#8b5cf6', trail: '#22d3ee', bodyStyle: 'energy' },
+                    crimson: { name: 'Crimson Surge', primary: '#dc2626', accent: '#f43f5e', trail: '#f87171', bodyStyle: 'berserker' },
+                    frost:   { name: 'Arctic Frost', primary: '#93c5fd', accent: '#38bdf8', trail: '#bfdbfe', bodyStyle: 'arctic' },
+                    matrix:  { name: 'Matrix Hacker', primary: '#22c55e', accent: '#14532d', trail: '#4ade80', bodyStyle: 'cyber' },
+                    titanium:{ name: 'Titanium Juggernaut', primary: '#94a3b8', accent: '#475569', trail: '#cbd5e1', bodyStyle: 'juggernaut' },
+                    omega:   { name: 'Omega Prime', primary: '#e11d48', accent: '#fbbf24', trail: '#f43f5e', bodyStyle: 'supreme' }
                 };
 
-                // 15 Free Weapon Skins with Distinct Styles & Shot Aesthetics
+                // 15 Unique Weapon Models with Distinct Shapes, Geometries, and Laser/Projectile Behaviors
                 this.currentWeapon = 'plasma_blaster';
                 this.weapons = {
-                    plasma_blaster: { name: 'Plasma Blaster', color: '#22d3ee', speed: 8, damage: 25, style: 'plasma' },
-                    laser_pulse:    { name: 'Laser Pulse Beam', color: '#f43f5e', speed: 10, damage: 30, style: 'laser' },
-                    ion_cannon:     { name: 'Ion Cannon', color: '#fbbf24', speed: 7, damage: 40, style: 'ion' },
-                    quantum_ray:    { name: 'Quantum Ray', color: '#a855f7', speed: 12, damage: 20, style: 'quantum' },
-                    void_striker:   { name: 'Void Striker', color: '#10b981', speed: 9, damage: 35, style: 'void' },
-                    sonic_blaster:  { name: 'Sonic Disruptor', color: '#38bdf8', speed: 8, damage: 28, style: 'sonic' },
-                    solar_beam:     { name: 'Solar Heat Ray', color: '#f97316', speed: 11, damage: 32, style: 'solar' },
-                    acid_spitter:   { name: 'Acid Spitter', color: '#84cc16', speed: 7, damage: 38, style: 'acid' },
-                    cyber_rifle:    { name: 'Cyber Rifle', color: '#60a5fa', speed: 10, damage: 25, style: 'rifle' },
-                    pulse_cannon:   { name: 'Pulse Cannon', color: '#ec4899', speed: 9, damage: 30, style: 'pulse' },
-                    blazing_core:   { name: 'Blazing Core', color: '#ef4444', speed: 8, damage: 35, style: 'blazing' },
-                    frost_shard:    { name: 'Frost Shard Gun', color: '#93c5fd', speed: 9, damage: 28, style: 'frost' },
-                    matrix_gun:     { name: 'Matrix Blaster', color: '#4ade80', speed: 10, damage: 30, style: 'matrix' },
-                    titan_cannon:   { name: 'Titan Heavy Gun', color: '#cbd5e1', speed: 6, damage: 50, style: 'titan' },
-                    omega_blaster:  { name: 'Omega Annihilator', color: '#f43f5e', speed: 12, damage: 45, style: 'omega' }
+                    plasma_blaster: { name: 'Plasma Blaster', color: '#22d3ee', speed: 8, damage: 25, style: 'pistol' },
+                    laser_pulse:    { name: 'Laser Beam Rifle', color: '#f43f5e', speed: 12, damage: 30, style: 'rifle' },
+                    ion_cannon:     { name: 'Ion Rotary Cannon', color: '#fbbf24', speed: 7, damage: 40, style: 'gatling' },
+                    quantum_ray:    { name: 'Quantum Ring Caster', color: '#a855f7', speed: 10, damage: 20, style: 'ring' },
+                    void_striker:   { name: 'Void Trident Harpoon', color: '#10b981', speed: 9, damage: 35, style: 'trident' },
+                    sonic_blaster:  { name: 'Sonic Discharger', color: '#38bdf8', speed: 8, damage: 28, style: 'megaphone' },
+                    solar_beam:     { name: 'Solar Thermal Cannon', color: '#f97316', speed: 11, damage: 32, style: 'heavy_cannon' },
+                    acid_spitter:   { name: 'Acid Bio-Launcher', color: '#84cc16', speed: 7, damage: 38, style: 'pod' },
+                    cyber_rifle:    { name: 'Cyber Sub-Machine Gun', color: '#60a5fa', speed: 13, damage: 22, style: 'smg' },
+                    pulse_cannon:   { name: 'Pulse Energy Crossbow', color: '#ec4899', speed: 9, damage: 30, style: 'crossbow' },
+                    blazing_core:   { name: 'Magma Flame Thrower', color: '#ef4444', speed: 8, damage: 35, style: 'flame' },
+                    frost_shard:    { name: 'Cryo Shard Launcher', color: '#93c5fd', speed: 9, damage: 28, style: 'shard' },
+                    matrix_gun:     { name: 'Matrix Grid Caster', color: '#4ade80', speed: 10, damage: 30, style: 'grid' },
+                    titan_cannon:   { name: 'Titan Railgun', color: '#cbd5e1', speed: 14, damage: 55, style: 'railgun' },
+                    omega_blaster:  { name: 'Omega Annihilator', color: '#f43f5e', speed: 10, damage: 50, style: 'annihilator' }
                 };
+
+                // --- 15 COMPANION PETS / DRONES SYSTEM ---
+                this.currentPet = 'aqua_drone';
+                this.pets = {
+                    aqua_drone:   { name: 'Aqua Scout Drone', color: '#22d3ee', perk: 'Auto-fires rapid water lasers', style: 'sphere', fireRate: 1.2 },
+                    sakura_spirit:{ name: 'Sakura Petal Spirit', color: '#f472b6', perk: 'Regenerates 5 HP per 15s', style: 'petal', fireRate: 1.8 },
+                    gold_bot:     { name: 'Cyber Gold Gremlin', color: '#fbbf24', perk: 'Doubles chest and gem trash yields', style: 'cube', fireRate: 1.5 },
+                    magma_imp:    { name: 'Magma Core Imp', color: '#ef4444', perk: 'Shoots burning plasma bolts', style: 'flame', fireRate: 0.9 },
+                    phantom_eye:  { name: 'Abyss Phantom Eye', color: '#10b981', perk: 'Wider collection magnetic pull', style: 'eye', fireRate: 1.4 },
+                    void_orb:     { name: 'Void Energy Orb', color: '#a855f7', perk: 'Fires piercing void rays', style: 'orb', fireRate: 1.0 },
+                    cobalt_droid: { name: 'Cobalt Sentinel Droid', color: '#3b82f6', perk: 'Absorbs 10% hazard damage', style: 'shield_drone', fireRate: 1.3 },
+                    solar_bird:   { name: 'Solar Phoenix Drone', color: '#f59e0b', perk: 'Extends dive timer by 15s', style: 'phoenix', fireRate: 1.1 },
+                    toxic_slime:  { name: 'Bio-Hazard Slime Pet', color: '#84cc16', perk: 'Slows nearby enemies and hazards', style: 'blob', fireRate: 2.0 },
+                    plasma_ghost: { name: 'Plasma Storm Spirit', color: '#06b6d4', perk: 'Fires double laser beams', style: 'twin_orb', fireRate: 0.8 },
+                    crimson_bat:  { name: 'Crimson Surge Bat', color: '#dc2626', perk: 'Converts hazards into bonus trash', style: 'bat', fireRate: 1.5 },
+                    frost_sprite: { name: 'Arctic Frost Sprite', color: '#93c5fd', perk: 'Freezes time on hazard collision', style: 'crystal', fireRate: 1.6 },
+                    matrix_grid:  { name: 'Matrix Code Glitch', color: '#4ade80', perk: 'Auto-collects all items nearby', style: 'matrix', fireRate: 1.0 },
+                    titan_guard:  { name: 'Titanium Juggernaut Bot', color: '#94a3b8', perk: 'Boosts max armor & defense', style: 'mech', fireRate: 1.7 },
+                    omega_dragon: { name: 'Omega Prime Dragon', color: '#e11d48', perk: 'Massive auto-fire annihilation lasers', style: 'dragon', fireRate: 0.6 }
+                };
+
+                this.petShootTimer = 0;
+                this.petX = 180;
+                this.petY = 150;
 
                 // Skill state
                 this.skillReady = true;
@@ -436,10 +463,11 @@
                     y: this.sub.y - 15,
                     vx: 0,
                     vy: -w.speed,
-                    radius: w.style === 'titan' || w.style === 'omega' ? 8 : 5,
+                    radius: w.style === 'railgun' || w.style === 'annihilator' ? 8 : 5,
                     damage: w.damage,
                     color: w.color,
-                    style: w.style
+                    style: w.style,
+                    isPet: false
                 });
                 this.particles.emit(this.sub.x, this.sub.y - 20, w.color, 8, 4);
                 this.sound.playShoot();
@@ -516,7 +544,8 @@
                     let dist = Math.hypot(this.sub.x - ent.x, this.sub.y - ent.y);
                     if (dist <= blastRadius + ent.radius) {
                         if (ent.type.startsWith('trash')) {
-                            let earned = ent.value * 2;
+                            let multiplier = (this.currentPet === 'gold_bot' && ent.type === 'trash_chest') ? 2 : 1;
+                            let earned = ent.value * 2 * multiplier;
                             this.trash += earned;
                             this.addPopup(`+${earned} ♻️`, ent.x, ent.y, '#38bdf8');
                             this.updateQuest('collect_trash', 1);
@@ -545,7 +574,6 @@
 
                 setTimeout(() => { this.shieldActive = false; }, 2000);
 
-                // --- 6-SECOND COOLDOWN APPLIED HERE ---
                 this.skillCooldownTimer = 6;
                 const cdEl = document.getElementById('skill-cooldown');
                 if (cdEl) cdEl.innerText = `${this.skillCooldownTimer}s`;
@@ -570,7 +598,8 @@
                 }
                 
                 this.state = 'DIVING';
-                this.diveTimer = this.maxDiveTime;
+                this.diveTimer = this.maxDiveTime + (this.currentPet === 'solar_bird' ? 15 : 0);
+                this.maxDiveTime = 90;
                 this.currentDepth = 0;
                 this.combo = 0;
                 this.comboMultiplier = 1;
@@ -603,6 +632,13 @@
                         this.currentDepth += 20;
                         document.getElementById('timer-text').innerText = `${this.diveTimer}s`;
                         document.getElementById('depth-text').innerText = `Depth: ${this.currentDepth}m`;
+
+                        // Pet passive health regen perk
+                        if (this.currentPet === 'sakura_spirit' && this.diveTimer % 15 === 0) {
+                            this.health = Math.min(this.maxHealth, this.health + 5);
+                            this.addPopup(`+5 HP (Sakura)`, this.sub.x, this.sub.y - 30, '#f472b6');
+                            this.updateHUD();
+                        }
 
                         if (this.diveTimer % 12 === 0) {
                             this.currentDrift = (Math.random() - 0.5) * 2.8;
@@ -665,7 +701,7 @@
                     'enemy_eel', 'enemy_urchin',
                     'powerup_magnet', 'powerup_timeslow', 'powerup_repair'
                 ];
-                const weights = [0.20, 0.15, 0.06, 0.08, 0.07, 0.06, 0.06, 0.06, 0.06, 0.05, 0.05, 0.04];
+                const weights = [0.28, 0.22, 0.10, 0.04, 0.04, 0.06, 0.06, 0.04, 0.04, 0.05, 0.05, 0.02];
                 let rand = Math.random();
                 let chosenType = 'trash_bottle';
                 let acc = 0;
@@ -777,7 +813,7 @@
                     `;
                 }
                 html += `</div>`;
-                this.showModal("Driver Suits (15 Free)", html, "Close", () => this.closeModal());
+                this.showModal("Driver Suits (Unique Silhouettes)", html, "Close", () => this.closeModal());
             }
 
             selectSkin(k) {
@@ -799,12 +835,36 @@
                     `;
                 }
                 html += `</div>`;
-                this.showModal("Weapon Armory (15 Free)", html, "Close", () => this.closeModal());
+                this.showModal("Weapon Armory (Unique Shapes & Lasers)", html, "Close", () => this.closeModal());
             }
 
             selectWeapon(k) {
                 this.currentWeapon = k;
                 this.openWeaponWardrobe();
+            }
+
+            openPetWardrobe() {
+                let html = `<div class="grid grid-cols-1 gap-3 max-h-[350px] overflow-y-auto">`;
+                for (let k in this.pets) {
+                    let p = this.pets[k];
+                    let isCurrent = this.currentPet === k;
+                    html += `
+                        <div class="bg-slate-900/90 border ${isCurrent ? 'border-emerald-400' : 'border-slate-800'} p-3 rounded-2xl flex justify-between items-center gap-2">
+                            <div>
+                                <h4 class="text-xs font-bold text-emerald-300">${p.name}</h4>
+                                <p class="text-[10px] text-slate-300">✨ Perk: ${p.perk}</p>
+                            </div>
+                            <button onclick="game.selectPet('${k}')" class="glow-button px-3 py-1.5 bg-${isCurrent ? 'emerald-600' : 'slate-800'} rounded-xl text-[10px] font-bold text-white">${isCurrent ? 'Equipped' : 'Equip'}</button>
+                        </div>
+                    `;
+                }
+                html += `</div>`;
+                this.showModal("Companion Pets & Drones Armory", html, "Close", () => this.closeModal());
+            }
+
+            selectPet(k) {
+                this.currentPet = k;
+                this.openPetWardrobe();
             }
 
             openQuests() {
@@ -868,18 +928,42 @@
                     this.sub.x += (this.sub.targetX - this.sub.x) * (this.sub.speed * speedMult);
                     this.sub.y += (this.sub.targetY - this.sub.y) * (this.sub.speed * speedMult);
 
+                    // Smooth pet floating follow mechanics
+                    let targetPetX = this.sub.x - 32;
+                    let targetPetY = this.sub.y - 8 + Math.sin(Date.now() * 0.008) * 6;
+                    this.petX += (targetPetX - this.petX) * 0.1;
+                    this.petY += (targetPetY - this.petY) * 0.1;
+
+                    // Pet auto-firing lasers during dives
+                    this.petShootTimer += delta;
+                    let activePet = this.pets[this.currentPet];
+                    if (this.petShootTimer >= activePet.fireRate) {
+                        this.petShootTimer = 0;
+                        this.playerProjectiles.push({
+                            x: this.petX,
+                            y: this.petY,
+                            vx: 0,
+                            vy: -10,
+                            radius: 4,
+                            damage: 18,
+                            color: activePet.color,
+                            style: 'pistol',
+                            isPet: true
+                        });
+                        this.particles.emit(this.petX, this.petY, activePet.color, 4, 3);
+                    }
+
                     let activeSkin = this.skins[this.currentSkin];
                     if (Math.random() < 0.4) {
                         this.particles.emit(this.sub.x, this.sub.y + 20, activeSkin.trail, 1, 1);
                     }
 
-                    // --- UPDATE PLAYER PROJECTILES & COLLISION WITH BOSS / HAZARDS ---
+                    // --- UPDATE PLAYER PROJECTILES ---
                     for (let i = this.playerProjectiles.length - 1; i >= 0; i--) {
                         let pp = this.playerProjectiles[i];
                         pp.x += pp.vx;
                         pp.y += pp.vy;
 
-                        // Check boss collision
                         if (this.bossActive && this.boss.data) {
                             let distToBoss = Math.hypot(pp.x - this.boss.x, pp.y - this.boss.y);
                             if (distToBoss < 45) {
@@ -891,7 +975,6 @@
                             }
                         }
 
-                        // Check hazards/creatures collision
                         let hitEntity = false;
                         for (let j = this.entities.length - 1; j >= 0; j--) {
                             let ent = this.entities[j];
@@ -899,7 +982,8 @@
                             if (distToEnt < ent.radius + pp.radius) {
                                 hitEntity = true;
                                 if (ent.type.startsWith('trash')) {
-                                    let earned = ent.value;
+                                    let multiplier = (this.currentPet === 'gold_bot' && ent.type === 'trash_chest') ? 2 : 1;
+                                    let earned = ent.value * multiplier;
                                     this.trash += earned;
                                     this.addPopup(`+${earned} ♻️`, ent.x, ent.y, '#38bdf8');
                                     this.sound.playCollect();
@@ -918,7 +1002,7 @@
                         }
                     }
 
-                    // --- BOSS AI & ACTIVE ATTACK SYSTEM ---
+                    // --- BOSS AI & ATTACK SYSTEM ---
                     if (this.bossActive && this.boss.data) {
                         this.boss.y += (this.boss.targetY - this.boss.y) * 0.03;
                         this.boss.x = this.width / 2 + Math.sin(Date.now() * 0.002) * 60;
@@ -959,8 +1043,9 @@
                         let distToSub = Math.hypot(this.sub.x - bp.x, this.sub.y - bp.y);
                         if (distToSub < this.sub.radius + bp.radius) {
                             if (!this.shieldActive && !this.isInvulnerable) {
-                                this.health = Math.max(0, this.health - 20);
-                                this.addPopup(`-20 HP`, this.sub.x, this.sub.y, '#f43f5e');
+                                let damageTaken = (this.currentPet === 'cobalt_droid') ? 18 : 20;
+                                this.health = Math.max(0, this.health - damageTaken);
+                                this.addPopup(`-${damageTaken} HP`, this.sub.x, this.sub.y, '#f43f5e');
                                 this.isInvulnerable = true;
                                 this.invulnerableTimer = 2.5;
                                 this.particles.emit(this.sub.x, this.sub.y, '#f43f5e', 20, 6);
@@ -1003,17 +1088,18 @@
                     for (let i = this.entities.length - 1; i >= 0; i--) {
                         let ent = this.entities[i];
 
-                        let slowFactor = (this.timeSlowTimer > 0 && !ent.type.startsWith('trash')) ? 0.3 : 1.0;
+                        let slowFactor = (this.timeSlowTimer > 0 && !ent.type.startsWith('trash')) ? 0.3 : (this.currentPet === 'toxic_slime' && !ent.type.startsWith('trash') ? 0.75 : 1.0);
                         ent.y -= ent.speed * slowFactor;
 
                         if (ent.type === 'enemy_eel') {
                             ent.x += Math.sin(Date.now() * 0.006) * 3;
                         }
 
-                        if (this.magnetTimer > 0 && ent.type.startsWith('trash')) {
+                        if ((this.magnetTimer > 0 || this.currentPet === 'phantom_eye') && ent.type.startsWith('trash')) {
+                            let pullSpeed = this.currentPet === 'phantom_eye' ? 4 : 5;
                             let angle = Math.atan2(this.sub.y - ent.y, this.sub.x - ent.x);
-                            ent.x += Math.cos(angle) * 5;
-                            ent.y += Math.sin(angle) * 5;
+                            ent.x += Math.cos(angle) * pullSpeed;
+                            ent.y += Math.sin(angle) * pullSpeed;
                         }
 
                         if (ent.y < -30) {
@@ -1022,7 +1108,7 @@
                             continue;
                         }
 
-                        let netRadius = this.sub.radius + 15 + (this.upgrades.netSize.level - 1) * 8;
+                        let netRadius = this.sub.radius + 15 + (this.upgrades.netSize.level - 1) * 8 + (this.currentPet === 'phantom_eye' ? 20 : 0);
                         let dist = Math.hypot(this.sub.x - ent.x, this.sub.y - ent.y);
                         
                         if (dist < netRadius + ent.radius) {
@@ -1032,7 +1118,8 @@
                                 let comboEl = document.getElementById('combo-text');
                                 if (comboEl) comboEl.innerText = `${this.comboMultiplier}x Combo`;
 
-                                let earned = Math.floor(ent.value * this.comboMultiplier);
+                                let multiplier = (this.currentPet === 'gold_bot' && ent.type === 'trash_chest') ? 2 : 1;
+                                let earned = Math.floor(ent.value * this.comboMultiplier * multiplier);
                                 this.trash += earned;
                                 this.addPopup(`+${earned} ♻️`, ent.x, ent.y, ent.type === 'trash_chest' ? '#fbbf24' : '#38bdf8');
                                 this.updateQuest('collect_trash', 1);
@@ -1057,9 +1144,16 @@
                                 let comboEl = document.getElementById('combo-text');
                                 if (comboEl) comboEl.innerText = `1x Combo`;
 
-                                if (!this.shieldActive && !this.isInvulnerable) {
-                                    this.health = Math.max(0, this.health - ent.value);
-                                    this.addPopup(`-${ent.value} HP`, ent.x, ent.y, '#f43f5e');
+                                if (this.currentPet === 'crimson_bat' && ent.type.startsWith('hazard')) {
+                                    let earned = 15;
+                                    this.trash += earned;
+                                    this.addPopup(`+${earned} ♻️ (Bat Perk)`, ent.x, ent.y, '#dc2626');
+                                    this.particles.emit(ent.x, ent.y, '#dc2626', 15, 4);
+                                    this.sound.playCollect();
+                                } else if (!this.shieldActive && !this.isInvulnerable) {
+                                    let damageTaken = (this.currentPet === 'cobalt_droid') ? Math.max(5, ent.value - 3) : ent.value;
+                                    this.health = Math.max(0, this.health - damageTaken);
+                                    this.addPopup(`-${damageTaken} HP`, ent.x, ent.y, '#f43f5e');
                                     this.particles.emit(ent.x, ent.y, '#f43f5e', 16, 5);
                                     this.sound.playTone(150, 'sawtooth', 0.25);
 
@@ -1153,7 +1247,7 @@
                     this.ctx.restore();
                 }
 
-                // --- DRAW DISTINCT PLAYER PROJECTILES BASED ON STYLE ---
+                // --- DRAW UNIQUE PLAYER & PET PROJECTILES ---
                 for (let pp of this.playerProjectiles) {
                     this.ctx.save();
                     this.ctx.shadowColor = pp.color;
@@ -1161,21 +1255,25 @@
                     this.ctx.fillStyle = pp.color;
                     this.ctx.strokeStyle = '#ffffff';
 
-                    if (pp.style === 'laser') {
-                        // Thin piercing laser beam
+                    if (pp.style === 'rifle' || pp.style === 'railgun') {
+                        this.ctx.lineWidth = pp.style === 'railgun' ? 5 : 3;
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(pp.x, pp.y + 14);
+                        this.ctx.lineTo(pp.x, pp.y - 14);
+                        this.ctx.stroke();
+                    } else if (pp.style === 'ring' || pp.style === 'annihilator') {
                         this.ctx.lineWidth = 3;
                         this.ctx.beginPath();
-                        this.ctx.moveTo(pp.x, pp.y + 10);
-                        this.ctx.lineTo(pp.x, pp.y - 12);
+                        this.ctx.arc(pp.x, pp.y, pp.radius + 3, 0, Math.PI * 2);
                         this.ctx.stroke();
-                    } else if (pp.style === 'ion' || pp.style === 'pulse') {
-                        // Ring projectile
-                        this.ctx.lineWidth = 2;
+                    } else if (pp.style === 'trident' || pp.style === 'crossbow') {
                         this.ctx.beginPath();
-                        this.ctx.arc(pp.x, pp.y, pp.radius + 2, 0, Math.PI * 2);
-                        this.ctx.stroke();
-                    } else if (pp.style === 'frost' || pp.style === 'acid') {
-                        // Diamond shard projectile
+                        this.ctx.moveTo(pp.x, pp.y - pp.radius - 4);
+                        this.ctx.lineTo(pp.x + pp.radius - 1, pp.y + pp.radius);
+                        this.ctx.lineTo(pp.x - pp.radius + 1, pp.y + pp.radius);
+                        this.ctx.closePath();
+                        this.ctx.fill();
+                    } else if (pp.style === 'shard' || pp.style === 'pod') {
                         this.ctx.beginPath();
                         this.ctx.moveTo(pp.x, pp.y - pp.radius - 2);
                         this.ctx.lineTo(pp.x + pp.radius, pp.y);
@@ -1184,7 +1282,6 @@
                         this.ctx.closePath();
                         this.ctx.fill();
                     } else {
-                        // Standard glowing orb
                         this.ctx.beginPath();
                         this.ctx.arc(pp.x, pp.y, pp.radius, 0, Math.PI * 2);
                         this.ctx.fill();
@@ -1192,7 +1289,7 @@
                     this.ctx.restore();
                 }
 
-                // --- DRAW ENTITIES WITH NAMES & WARNING SIGNS ---
+                // --- DRAW ENTITIES WITH LABELS ---
                 for (let ent of this.entities) {
                     this.ctx.save();
                     let t = Date.now() * 0.004;
@@ -1355,7 +1452,6 @@
                     this.ctx.restore();
                 }
 
-                // Draw Floating Score Popups
                 for (let pop of this.popups) {
                     this.ctx.save();
                     this.ctx.globalAlpha = Math.max(0, pop.alpha);
@@ -1368,7 +1464,40 @@
                     this.ctx.restore();
                 }
 
-                // Draw Full-Body Robotic Swimmer & Distinct Equipped Weapon Model
+                // ==========================================================================
+                // DRAW ACTIVE COMPANION PET / DRONE DURING DIVES
+                // ==========================================================================
+                if (this.state === 'DIVING') {
+                    const activePet = this.pets[this.currentPet];
+                    this.ctx.save();
+                    this.ctx.shadowColor = activePet.color;
+                    this.ctx.shadowBlur = 15;
+                    this.ctx.fillStyle = activePet.color;
+                    this.ctx.strokeStyle = '#ffffff';
+                    this.ctx.lineWidth = 2;
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.petX, this.petY, 12, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.stroke();
+
+                    // Inner glowing core
+                    this.ctx.fillStyle = '#ffffff';
+                    this.ctx.beginPath();
+                    this.ctx.arc(this.petX, this.petY, 4, 0, Math.PI * 2);
+                    this.ctx.fill();
+
+                    // Pet Name Tag
+                    this.ctx.fillStyle = activePet.color;
+                    this.ctx.font = 'bold 8px Fredoka';
+                    this.ctx.textAlign = 'center';
+                    this.ctx.fillText(activePet.name.split(' ')[0], this.petX, this.petY - 16);
+                    this.ctx.restore();
+                }
+
+                // ==========================================================================
+                // DRAW UNIQUE DRIVER SUIT & WEAPON GEOMETRY
+                // ==========================================================================
                 const skin = this.skins[this.currentSkin];
                 const weapon = this.weapons[this.currentWeapon];
                 this.ctx.save();
@@ -1388,8 +1517,11 @@
                 let armSwimLeft = Math.sin(t) * 8;
                 let armSwimRight = -Math.sin(t) * 8;
 
+                let bodyStyle = skin.bodyStyle;
+
+                // Arms
                 this.ctx.strokeStyle = skin.primary;
-                this.ctx.lineWidth = 4;
+                this.ctx.lineWidth = bodyStyle === 'heavy' || bodyStyle === 'juggernaut' ? 6 : 4;
                 this.ctx.beginPath();
                 this.ctx.moveTo(bx - 14, by + 4);
                 this.ctx.lineTo(bx - 26, by + 12 + armSwimLeft);
@@ -1397,7 +1529,7 @@
 
                 this.ctx.fillStyle = skin.accent;
                 this.ctx.beginPath();
-                this.ctx.arc(bx - 27, by + 13 + armSwimLeft, 3.5, 0, Math.PI * 2);
+                this.ctx.arc(bx - 27, by + 13 + armSwimLeft, bodyStyle === 'heavy' ? 5 : 3.5, 0, Math.PI * 2);
                 this.ctx.fill();
 
                 this.ctx.beginPath();
@@ -1407,73 +1539,153 @@
 
                 this.ctx.fillStyle = skin.accent;
                 this.ctx.beginPath();
-                this.ctx.arc(bx + 27, by + 13 + armSwimRight, 3.5, 0, Math.PI * 2);
+                this.ctx.arc(bx + 27, by + 13 + armSwimRight, bodyStyle === 'heavy' ? 5 : 3.5, 0, Math.PI * 2);
                 this.ctx.fill();
 
-                // --- DRAW UNIQUE WEAPON GRAPHIC BASED ON STYLE ---
+                // --- DRAW UNIQUE WEAPON SHAPES HELD IN HAND ---
                 this.ctx.save();
                 this.ctx.shadowColor = weapon.color;
-                this.ctx.shadowBlur = 14;
-                this.ctx.fillStyle = weapon.color;
-                this.ctx.strokeStyle = '#ffffff';
-                this.ctx.lineWidth = 1.5;
+                this.ctx.shadowBlur = 16;
+                this.ctx.translate(bx + 22, by + 4 + armSwimRight);
 
-                if (weapon.style === 'titan' || weapon.style === 'omega') {
-                    // Heavy Double-Barrel Cannon
+                let wStyle = weapon.style;
+                if (wStyle === 'rifle') {
+                    this.ctx.fillStyle = '#1e293b';
+                    this.ctx.strokeStyle = weapon.color;
+                    this.ctx.lineWidth = 2;
                     this.ctx.beginPath();
-                    this.ctx.roundRect(bx + 16, by - 2 + armSwimRight, 14, 22, 4);
+                    this.ctx.roundRect(-3, -22, 6, 32, 2);
                     this.ctx.fill();
                     this.ctx.stroke();
+                    this.ctx.fillStyle = weapon.color;
+                    this.ctx.fillRect(-1, -26, 2, 6);
+                } else if (wStyle === 'gatling') {
                     this.ctx.fillStyle = '#0f172a';
-                    this.ctx.fillRect(bx + 19, by + 2 + armSwimRight, 3, 14);
-                    this.ctx.fillRect(bx + 24, by + 2 + armSwimRight, 3, 14);
-                } else if (weapon.style === 'laser' || weapon.style === 'quantum') {
-                    // Sleek Angular Laser Rifle
+                    this.ctx.strokeStyle = weapon.color;
+                    this.ctx.lineWidth = 2;
                     this.ctx.beginPath();
-                    this.ctx.moveTo(bx + 22, by + 18 + armSwimRight);
-                    this.ctx.lineTo(bx + 28, by - 4 + armSwimRight);
-                    this.ctx.lineTo(bx + 31, by - 2 + armSwimRight);
-                    this.ctx.lineTo(bx + 25, by + 20 + armSwimRight);
+                    this.ctx.roundRect(-6, -14, 12, 22, 4);
+                    this.ctx.fill();
+                    this.ctx.stroke();
+                    this.ctx.fillStyle = weapon.color;
+                    this.ctx.fillRect(-4, -20, 2, 8);
+                    this.ctx.fillRect(2, -20, 2, 8);
+                } else if (wStyle === 'trident') {
+                    this.ctx.strokeStyle = weapon.color;
+                    this.ctx.lineWidth = 3;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(0, 12);
+                    this.ctx.lineTo(0, -20);
+                    this.ctx.stroke();
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(-6, -14); this.ctx.lineTo(0, -24); this.ctx.lineTo(6, -14);
+                    this.ctx.stroke();
+                } else if (wStyle === 'ring' || wStyle === 'annihilator') {
+                    this.ctx.fillStyle = '#0f172a';
+                    this.ctx.strokeStyle = weapon.color;
+                    this.ctx.lineWidth = 3;
+                    this.ctx.beginPath();
+                    this.ctx.arc(0, -8, 8, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    this.ctx.stroke();
+                    this.ctx.fillStyle = weapon.color;
+                    this.ctx.beginPath();
+                    this.ctx.arc(0, -8, 3, 0, Math.PI * 2);
+                    this.ctx.fill();
+                } else if (wStyle === 'megaphone' || wStyle === 'heavy_cannon') {
+                    this.ctx.fillStyle = '#1e293b';
+                    this.ctx.strokeStyle = weapon.color;
+                    this.ctx.lineWidth = 2;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(-6, 8);
+                    this.ctx.lineTo(-10, -14);
+                    this.ctx.lineTo(10, -14);
+                    this.ctx.lineTo(6, 8);
                     this.ctx.closePath();
                     this.ctx.fill();
                     this.ctx.stroke();
-                } else if (weapon.style === 'ion' || weapon.style === 'pulse') {
-                    // Ring Blaster
+                } else if (wStyle === 'crossbow') {
+                    this.ctx.fillStyle = '#0f172a';
+                    this.ctx.strokeStyle = weapon.color;
+                    this.ctx.lineWidth = 2;
+                    this.ctx.fillRect(-2, -10, 4, 18);
                     this.ctx.beginPath();
-                    this.ctx.arc(bx + 24, by + 8 + armSwimRight, 9, 0, Math.PI * 2);
+                    this.ctx.moveTo(-12, -4);
+                    this.ctx.lineTo(0, -10);
+                    this.ctx.lineTo(12, -4);
+                    this.ctx.stroke();
+                } else if (wStyle === 'railgun') {
+                    this.ctx.fillStyle = '#334155';
+                    this.ctx.strokeStyle = weapon.color;
+                    this.ctx.lineWidth = 3;
+                    this.ctx.fillRect(-6, -18, 4, 26);
+                    this.ctx.fillRect(2, -18, 4, 26);
+                    this.ctx.fillStyle = weapon.color;
+                    this.ctx.fillRect(-2, -22, 4, 8);
+                } else {
+                    this.ctx.fillStyle = '#1e293b';
+                    this.ctx.strokeStyle = weapon.color;
+                    this.ctx.lineWidth = 2;
+                    this.ctx.beginPath();
+                    this.ctx.roundRect(-4, -6, 12, 22, 4);
                     this.ctx.fill();
                     this.ctx.stroke();
+                    this.ctx.fillStyle = weapon.color;
+                    this.ctx.fillRect(1, -12, 2, 8);
+                }
+
+                this.ctx.restore();
+
+                // Torso
+                if (bodyStyle === 'heavy' || bodyStyle === 'juggernaut') {
                     this.ctx.fillStyle = '#0f172a';
+                    this.ctx.strokeStyle = skin.primary;
+                    this.ctx.lineWidth = 3;
                     this.ctx.beginPath();
-                    this.ctx.arc(bx + 24, by + 8 + armSwimRight, 4, 0, Math.PI * 2);
+                    this.ctx.moveTo(bx - 18, by + 4);
+                    this.ctx.lineTo(bx + 18, by + 4);
+                    this.ctx.lineTo(bx + 14, by + 32);
+                    this.ctx.lineTo(bx - 14, by + 32);
+                    this.ctx.closePath();
+                    this.ctx.fill();
+                    this.ctx.stroke();
+                } else if (bodyStyle === 'sleek' || bodyStyle === 'winged') {
+                    this.ctx.fillStyle = '#0f172a';
+                    this.ctx.strokeStyle = skin.primary;
+                    this.ctx.lineWidth = 2.5;
+                    this.ctx.beginPath();
+                    this.ctx.roundRect(bx - 10, by + 6, 20, 24, 10);
+                    this.ctx.fill();
+                    this.ctx.stroke();
+                    this.ctx.fillStyle = skin.accent;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(bx - 10, by + 16);
+                    this.ctx.lineTo(bx - 20, by + 22);
+                    this.ctx.lineTo(bx - 10, by + 26);
+                    this.ctx.moveTo(bx + 10, by + 16);
+                    this.ctx.lineTo(bx + 20, by + 22);
+                    this.ctx.lineTo(bx + 10, by + 26);
                     this.ctx.fill();
                 } else {
-                    // Standard Handheld Blaster
+                    this.ctx.fillStyle = '#0f172a';
+                    this.ctx.strokeStyle = skin.primary;
+                    this.ctx.lineWidth = 2.5;
                     this.ctx.beginPath();
-                    this.ctx.roundRect(bx + 20, by + 2 + armSwimRight, 7, 18, 3);
+                    this.ctx.roundRect(bx - 12, by + 8, 24, 22, 8);
                     this.ctx.fill();
                     this.ctx.stroke();
                 }
-                this.ctx.restore();
-
-                this.ctx.fillStyle = '#0f172a';
-                this.ctx.strokeStyle = skin.primary;
-                this.ctx.lineWidth = 2.5;
-                this.ctx.beginPath();
-                this.ctx.roundRect(bx - 12, by + 8, 24, 22, 8);
-                this.ctx.fill();
-                this.ctx.stroke();
 
                 this.ctx.fillStyle = skin.primary;
                 this.ctx.beginPath();
-                this.ctx.arc(bx, by + 18, 4, 0, Math.PI * 2);
+                this.ctx.arc(bx, by + 18, bodyStyle === 'heavy' ? 6 : 4, 0, Math.PI * 2);
                 this.ctx.fill();
 
                 let legSwimLeft = Math.cos(t * 1.5) * 6;
                 let legSwimRight = -Math.cos(t * 1.5) * 6;
 
                 this.ctx.strokeStyle = skin.primary;
-                this.ctx.lineWidth = 3.5;
+                this.ctx.lineWidth = bodyStyle === 'heavy' ? 5 : 3.5;
                 this.ctx.beginPath();
                 this.ctx.moveTo(bx - 6, by + 30);
                 this.ctx.lineTo(bx - 8, by + 42 + legSwimLeft);
@@ -1487,23 +1699,30 @@
                 this.ctx.ellipse(bx + 10, by + 46 + legSwimRight, 4, 10, -Math.PI / 6, 0, Math.PI * 2);
                 this.ctx.fill();
 
+                // Helmet
                 this.ctx.fillStyle = '#0f172a';
                 this.ctx.strokeStyle = skin.primary;
                 this.ctx.lineWidth = 3;
                 this.ctx.beginPath();
-                this.ctx.arc(bx, by - 4, this.sub.radius - 4, 0, Math.PI * 2);
+                
+                if (bodyStyle === 'heavy' || bodyStyle === 'juggernaut') {
+                    this.ctx.roundRect(bx - 15, by - 16, 30, 24, 4);
+                } else if (bodyStyle === 'stealth' || bodyStyle === 'cyber') {
+                    this.ctx.moveTo(bx, by - 22);
+                    this.ctx.lineTo(bx + 14, by - 8);
+                    this.ctx.lineTo(bx + 12, by + 4);
+                    this.ctx.lineTo(bx - 12, by + 4);
+                    this.ctx.lineTo(bx - 14, by - 8);
+                    this.ctx.closePath();
+                } else {
+                    this.ctx.arc(bx, by - 4, this.sub.radius - 4, 0, Math.PI * 2);
+                }
                 this.ctx.fill();
                 this.ctx.stroke();
 
-                this.ctx.fillStyle = '#0284c7';
+                this.ctx.fillStyle = skin.bodyStyle === 'stealth' ? '#10b981' : '#0284c7';
                 this.ctx.beginPath();
                 this.ctx.roundRect(bx - 11, by - 10, 22, 12, 5);
-                this.ctx.fill();
-
-                this.ctx.fillStyle = skin.primary;
-                this.ctx.beginPath();
-                this.ctx.arc(bx - 4.5, by - 4, 2.2, 0, Math.PI * 2);
-                this.ctx.arc(bx + 4.5, by - 4, 2.2, 0, Math.PI * 2);
                 this.ctx.fill();
 
                 this.ctx.fillStyle = skin.accent;
